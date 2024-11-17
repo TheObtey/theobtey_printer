@@ -76,7 +76,7 @@ function ENT:Draw()
             if OBTPRINT.imgui.IsPressed(180, 155, 240, 60) then
                 
                 net.Start("OBTPRINT:ActionOnPrinter")
-                net.WriteUInt(5, 3)
+                net.WriteUInt(1, 3)
                 net.WriteEntity(self)
                 net.SendToServer()
 
@@ -118,7 +118,7 @@ function ENT:Draw()
             if OBTPRINT.imgui.IsPressed() then
                 
                 net.Start("OBTPRINT:ActionOnPrinter")
-                net.WriteUInt(1, 3)
+                net.WriteUInt(2, 3)
                 net.WriteEntity(self)
                 net.SendToServer()
                 
@@ -160,7 +160,7 @@ function ENT:Draw()
             if OBTPRINT.imgui.IsPressed() then
                 
                 net.Start("OBTPRINT:ActionOnPrinter")
-                net.WriteUInt(2, 3)
+                net.WriteUInt(3, 3)
                 net.WriteEntity(self)
                 net.SendToServer()
                 
