@@ -28,9 +28,6 @@ end
 
 function ENT:RetrieveMoney(ply)
 
-    if !IsValid(ply) or !ply:IsPlayer() then return end
-    if self:GetPos():DistToSqr(ply:GetPos()) > 10000*OBTPRINT.Config.MinimalDistance or not self:IsPlayerLooking(ply) then return end
-
     local money = self:GetMoneyAmount()
 
     if money == 0 then return end
@@ -44,10 +41,8 @@ function ENT:UpgradeTier(ply)
 
     local newTier = self:GetTier() + 1
 
-    if newTier > #OBTPRINT.Config.Tiers then return end
-    
-    if !IsValid(ply) or !ply:IsPlayer() or !ply:canAfford(OBTPRINT.Config.Tiers[newTier].price) then return end
-    if self:GetPos():DistToSqr(ply:GetPos()) > 10000*OBTPRINT.Config.MinimalDistance or not self:IsPlayerLooking(ply) then return end
+    if newTier > #OBTPRINT.Config.Tiers then return end    
+    if !ply:canAfford(OBTPRINT.Config.Tiers[newTier].price) then return end
 
     ply:addMoney(-OBTPRINT.Config.Tiers[newTier].price)
 
@@ -58,9 +53,7 @@ end
 
 function ENT:RechargeBattery(ply)
 
-    if !IsValid(ply) or !ply:IsPlayer() or !ply:canAfford(OBTPRINT.Config.BatteryRechargeCost) then return end
-    if self:GetPos():DistToSqr(ply:GetPos()) > 10000*OBTPRINT.Config.MinimalDistance or not self:IsPlayerLooking(ply) then return end
-    if self:GetBatteryCharge() == 100 then return end
+    if !ply:canAfford(OBTPRINT.Config.BatteryRechargeCost) or self:GetBatteryCharge() == 100 then return end
 
     ply:addMoney(-OBTPRINT.Config.BatteryRechargeCost)
     self:SetBatteryCharge(100)
@@ -69,9 +62,7 @@ end
 
 function ENT:CoolTemperature(ply)
 
-    if !IsValid(ply) or !ply:IsPlayer() or !ply:canAfford(OBTPRINT.Config.TemperatureCoolCost) then return end
-    if self:GetPos():DistToSqr(ply:GetPos()) > 10000*OBTPRINT.Config.MinimalDistance or not self:IsPlayerLooking(ply) then return end
-    if self:GetTemperature() <= 50 then return end
+    if !ply:canAfford(OBTPRINT.Config.TemperatureCoolCost) or self:GetTemperature() <= 50 then return end
 
     ply:addMoney(-OBTPRINT.Config.TemperatureCoolCost)
     self:SetTemperature(50)
@@ -85,8 +76,6 @@ function ENT:DestroyPrinter()
 end
 
 function ENT:IsPlayerLooking(ply)
-
-    if !IsValid(ply) or !ply:IsPlayer() then return end
 
     return ply:GetEyeTrace().Entity == self
 
@@ -124,45 +113,28 @@ local actions = {
     [1] = {
         func = function(printer, ply)
 
-            if not IsValid(printer) or printer:GetClass() ~= "theobtey_printer" then return end
-
-            printer:RechargeBattery(ply)
+            printer:UpgradeTier(ply)
 
         end
     },
     [2] = {
         func = function(printer, ply)
 
-            if not IsValid(printer) or printer:GetClass() ~= "theobtey_printer" then return end
-
-            printer:CoolTemperature(ply)
+            printer:RechargeBattery(ply)
 
         end
     },
     [3] = {
         func = function(printer, ply)
 
-            if not IsValid(printer) or printer:GetClass() ~= "theobtey_printer" then return end
-
-            printer:RetrieveMoney(ply)
+            printer:CoolTemperature(ply)
 
         end
     },
     [4] = {
         func = function(printer, ply)
-            
-            if not IsValid(printer) or printer:GetClass() ~= "theobtey_printer" then return end
 
             printer:RetrieveMoney(ply)
-
-        end
-    },
-    [5] = {
-        func = function(printer, ply)
-
-            if not IsValid(printer) or printer:GetClass() ~= "theobtey_printer" then return end
-
-            printer:UpgradeTier(ply)
 
         end
     }
@@ -172,6 +144,11 @@ net.Receive("OBTPRINT:ActionOnPrinter", function(_, ply)
 
     local num = net.ReadUInt(3)
     local printer = net.ReadEntity()
+
+    if not IsValid(printer) or printer:GetClass() ~= "theobtey_printer" then return end
+
+    if !IsValid(ply) or !ply:IsPlayer() or !ply:canAfford(OBTPRINT.Config.TemperatureCoolCost) then return end
+    if printer:GetPos():DistToSqr(ply:GetPos()) > 10000*OBTPRINT.Config.MinimalDistance or not printer:IsPlayerLooking(ply) then return end
 
     actions[num].func(printer, ply)
 
