@@ -8,4 +8,6 @@ Current features :
 - Multilanguage support
 - Free and open source ✨
 
-![printer](https://i.imgur.com/4mPVsGk.png)
+<img src="https://i.imgur.com/4mPVsGk.png"
+     alt="printer"
+     style="width: 500px; height: 500px;" />
