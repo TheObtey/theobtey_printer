@@ -6,7 +6,7 @@ util.AddNetworkString("OBTPRINT:ActionOnPrinter")
 
 function ENT:Initialize()
     
-	self:SetModel("models/props_c17/consolebox01a.mdl")
+    self:SetModel("models/props_c17/consolebox01a.mdl")
     self:PhysicsInit(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
