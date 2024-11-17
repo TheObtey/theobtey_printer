@@ -11,8 +11,10 @@ function ENT:SetupDataTables()
     self:NetworkVar("Int", 1, "MoneyAmount")
     self:NetworkVar("Int", 2, "BatteryCharge")
     self:NetworkVar("Int", 3, "Temperature")
+    self:NetworkVar("Int", 4, "Tier")
 
-    self:NetworkVar("String", 1, "PrinterOwner")
-    self:NetworkVar("String", 2, "Tier")
+    self:NetworkVar("String", 1, "TierName")
+
+    self:NetworkVar("Entity", 1, "PrinterOwner")
     
 end
