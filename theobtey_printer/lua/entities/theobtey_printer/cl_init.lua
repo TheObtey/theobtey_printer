@@ -14,6 +14,11 @@ local currentColors = {
     ["money_btn"] = colors["slot"]
 }
 
+local upgradeCooldown = 0
+local batteryCooldown = 0
+local temperatureCooldown = 0
+local retrieveMoneyCooldown = 0
+
 OBTPRINT.Fonts = OBTPRINT.Fonts or {}
 
 -- Automatic font-creation function
@@ -75,10 +80,17 @@ function ENT:Draw()
         
             if OBTPRINT.imgui.IsPressed(180, 155, 240, 60) then
                 
-                net.Start("OBTPRINT:ActionOnPrinter")
-                net.WriteUInt(1, 3)
-                net.WriteEntity(self)
-                net.SendToServer()
+                if CurTime() >= upgradeCooldown then 
+                
+                    net.Start("OBTPRINT:ActionOnPrinter")
+                    net.WriteUInt(1, 3)
+                    net.WriteEntity(self)
+                    net.SendToServer()
+    
+                    upgradeCooldown = CurTime() + 2
+                
+                end
+
 
             end
 
@@ -117,10 +129,17 @@ function ENT:Draw()
             
             if OBTPRINT.imgui.IsPressed() then
                 
-                net.Start("OBTPRINT:ActionOnPrinter")
-                net.WriteUInt(2, 3)
-                net.WriteEntity(self)
-                net.SendToServer()
+                if CurTime() >= batteryCooldown then 
+                
+                    net.Start("OBTPRINT:ActionOnPrinter")
+                    net.WriteUInt(2, 3)
+                    net.WriteEntity(self)
+                    net.SendToServer()
+    
+                    batteryCooldown = CurTime() + 2
+                
+                end
+
                 
             end
             
@@ -159,10 +178,17 @@ function ENT:Draw()
             
             if OBTPRINT.imgui.IsPressed() then
                 
-                net.Start("OBTPRINT:ActionOnPrinter")
-                net.WriteUInt(3, 3)
-                net.WriteEntity(self)
-                net.SendToServer()
+                if CurTime() >= temperatureCooldown then
+                    
+                    net.Start("OBTPRINT:ActionOnPrinter")
+                    net.WriteUInt(3, 3)
+                    net.WriteEntity(self)
+                    net.SendToServer()
+    
+                    temperatureCooldown = CurTime() + 2
+                
+                end
+
                 
             end
             
@@ -182,11 +208,17 @@ function ENT:Draw()
             
             if OBTPRINT.imgui.IsPressed() then
                 
-                net.Start("OBTPRINT:ActionOnPrinter")
-                net.WriteUInt(4, 3)
-                net.WriteEntity(self)
-                net.SendToServer()
-                
+                if CurTime() >= retrieveMoneyCooldown then 
+                    
+                    net.Start("OBTPRINT:ActionOnPrinter")
+                    net.WriteUInt(4, 3)
+                    net.WriteEntity(self)
+                    net.SendToServer()
+    
+                    retrieveMoneyCooldown = CurTime() + 2
+                    
+                end
+
             end
             
         else
