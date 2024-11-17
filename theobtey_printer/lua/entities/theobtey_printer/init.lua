@@ -92,33 +92,33 @@ function ENT:IsPlayerLooking(ply)
 
 end
 
--- function ENT:Think()
+function ENT:Think()
 
---     local moneyAmount = self:GetMoneyAmount()
---     local batteryCharge = self:GetBatteryCharge()
---     local temperature = self:GetTemperature()
+    local moneyAmount = self:GetMoneyAmount()
+    local batteryCharge = self:GetBatteryCharge()
+    local temperature = self:GetTemperature()
 
---     self:SetMoneyAmount(moneyAmount + (batteryCharge > 0 and OBTPRINT.Config.Tiers[self:GetTier()].printedMoney or 0))
---     self:SetBatteryCharge(math.max(0, batteryCharge - (batteryCharge > 0 and OBTPRINT.Config.BatteryDecrease or 0)))
+    self:SetMoneyAmount(moneyAmount + (batteryCharge > 0 and OBTPRINT.Config.Tiers[self:GetTier()].printedMoney or 0))
+    self:SetBatteryCharge(math.max(0, batteryCharge - (batteryCharge > 0 and OBTPRINT.Config.BatteryDecrease or 0)))
     
---     self:SetTemperature(
---         batteryCharge > 0 and
---             math.min(100, temperature + OBTPRINT.Config.TemperatureIncrease) or
---             math.max(50, temperature - OBTPRINT.Config.TemperatureIncrease)
---     )
+    self:SetTemperature(
+        batteryCharge > 0 and
+            math.min(100, temperature + OBTPRINT.Config.TemperatureIncrease) or
+            math.max(50, temperature - OBTPRINT.Config.TemperatureIncrease)
+    )
     
---     if temperature >= 100 then
---         self.health =- 20
---         if self.health <= 0 then
---             self:DestroyPrinter()
---         end
+    if temperature >= 100 then
+        self.health =- 20
+        if self.health <= 0 then
+            self:DestroyPrinter()
+        end
 
---     end
+    end
     
---     self:NextThink(CurTime() + OBTPRINT.Config.IntervalBetweenPrint)
---     return true
+    self:NextThink(CurTime() + OBTPRINT.Config.IntervalBetweenPrint)
+    return true
 
--- end
+end
 
 local actions = {
     [1] = {
