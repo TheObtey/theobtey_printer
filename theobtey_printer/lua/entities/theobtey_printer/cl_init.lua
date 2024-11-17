@@ -58,19 +58,19 @@ function ENT:Draw()
         
         -- Draw player's name
         draw.RoundedBox(0, 15, 15, 570, 60, colors["border"])
-        draw.RoundedBox(0, 20, 20, 560, 50, Color(48,48,48))
+        draw.RoundedBox(0, 20, 20, 560, 50, colors["slot"])
         
         draw.SimpleText(self:GetPrinterOwner(), OBTPRINT:Font(32, nil, false), 300, 42, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         
         -- Draw printer tier
         draw.RoundedBox(0, 15, 85, 570, 60, colors["border"])
-        draw.RoundedBox(0, 20, 90, 560, 50, Color(48,48,48))
+        draw.RoundedBox(0, 20, 90, 560, 50, colors["slot"])
         
         draw.SimpleText(tostring(self:GetTier()), OBTPRINT:Font(32, nil, false), 300, 114, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)    
         
         -- Draw battery slot
         draw.RoundedBox(0, 15, 155, 160, 330, colors["border"])
-        draw.RoundedBox(0, 20, 160, 150, 320, Color(48,48,48))
+        draw.RoundedBox(0, 20, 160, 150, 320, colors["slot"])
         draw.RoundedBox(0, 25, 434, 140, 40, colors["border"])
         draw.RoundedBox(0, 28, 437, 134, 34, currentColors["battery_btn"])
         
