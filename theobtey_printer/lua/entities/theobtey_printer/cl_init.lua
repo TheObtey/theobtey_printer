@@ -109,15 +109,8 @@ function ENT:Draw()
         draw.SimpleText(OBTPRINT.Constants.texts[OBTPRINT.Config.Language]["battery_charge"], OBTPRINT:Font(24, "SemiBold"), 93, 455, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         
         local batteryCharge = self:GetBatteryCharge()
-        local chargeLevels = {100, 80, 50, 20, 10}
-        local materialKey = "0"
-
-        for _, level in ipairs(chargeLevels) do
-            if batteryCharge >= level then
-                materialKey = tostring(level)
-                break
-            end
-        end
+        local chargeLevels = {[100] = true, [80] = true, [50] = true, [20] = true, [10] = true}
+        local materialKey = chargeLevels[batteryCharge] and tostring(batteryCharge) or "0"
 
         surface.SetMaterial(OBTPRINT.Constants.materials.battery[materialKey])
         surface.SetDrawColor(color_white)
@@ -158,15 +151,8 @@ function ENT:Draw()
         draw.SimpleText(OBTPRINT.Constants.texts[OBTPRINT.Config.Language]["temperature_cool"], OBTPRINT:Font(24), 505, 455, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         
         local temperature = self:GetTemperature()
-        local tempLevels = {100, 80}
-        local materialKey = "50"
-        
-        for _, level in ipairs(tempLevels) do
-            if temperature >= level then
-                materialKey = tostring(level)
-                break
-            end
-        end
+        local tempLevels = {[100] = true, [80] = true}
+        local materialKey = tempLevels[temperature] and tostring(temperature) or "50"
         
         surface.SetMaterial(OBTPRINT.Constants.materials.temperature[materialKey])
         surface.SetDrawColor(color_white)
