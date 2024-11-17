@@ -7,3 +7,5 @@ Current features :
 - Tier system for printer
 - Multilanguage support
 - Free and open source ✨
+
+![printer](https://i.imgur.com/4mPVsGk.png)
