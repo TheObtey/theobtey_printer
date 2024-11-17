@@ -1,10 +1,10 @@
 # theobtey_printer
-A free solution for adding money printers to your DarkRP project's
+A free solution to adding money printers to your DarkRP project's
 
-This addon isn't fully finished. New features are upcomming !
+This addon isn't fully finished. New features are upcoming !
 
 Current features :
-- Tier system for printer
+- Tier system for printers
 - Multilanguage support
 - Free and open source ✨
 
