@@ -6,7 +6,7 @@ util.AddNetworkString("OBTPRINT:ActionOnPrinter")
 
 function ENT:Initialize()
     
-    self:SetModel("models/props_c17/consolebox01a.mdl")
+	self:SetModel("models/props_c17/consolebox01a.mdl")
     self:PhysicsInit(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
@@ -42,7 +42,7 @@ function ENT:UpgradeTier(ply)
     local newTier = self:GetTier() + 1
 
     if newTier > #OBTPRINT.Config.Tiers then return end    
-    if not ply:canAfford(OBTPRINT.Config.Tiers[newTier].price) then return end
+    if !ply:canAfford(OBTPRINT.Config.Tiers[newTier].price) then return end
 
     ply:addMoney(-OBTPRINT.Config.Tiers[newTier].price)
 
@@ -53,7 +53,7 @@ end
 
 function ENT:RechargeBattery(ply)
 
-    if not ply:canAfford(OBTPRINT.Config.BatteryRechargeCost) or self:GetBatteryCharge() == 100 then return end
+    if !ply:canAfford(OBTPRINT.Config.BatteryRechargeCost) or self:GetBatteryCharge() == 100 then return end
 
     ply:addMoney(-OBTPRINT.Config.BatteryRechargeCost)
     self:SetBatteryCharge(100)
@@ -62,7 +62,7 @@ end
 
 function ENT:CoolTemperature(ply)
 
-    if not ply:canAfford(OBTPRINT.Config.TemperatureCoolCost) or self:GetTemperature() <= 50 then return end
+    if !ply:canAfford(OBTPRINT.Config.TemperatureCoolCost) or self:GetTemperature() <= 50 then return end
 
     ply:addMoney(-OBTPRINT.Config.TemperatureCoolCost)
     self:SetTemperature(50)
@@ -140,16 +140,21 @@ local actions = {
     }
 }
 
+local cooldown = 0
 net.Receive("OBTPRINT:ActionOnPrinter", function(_, ply)
+
+    if CurTime() < cooldown then return end
 
     local num = net.ReadUInt(3)
     local printer = net.ReadEntity()
 
     if not IsValid(printer) or printer:GetClass() ~= "theobtey_printer" then return end
 
-    if not IsValid(ply) or not ply:IsPlayer() or not ply:canAfford(OBTPRINT.Config.TemperatureCoolCost) then return end
+    if !IsValid(ply) or !ply:IsPlayer() or !ply:canAfford(OBTPRINT.Config.TemperatureCoolCost) then return end
     if printer:GetPos():DistToSqr(ply:GetPos()) > 10000*OBTPRINT.Config.MinimalDistance or not printer:IsPlayerLooking(ply) then return end
 
     actions[num].func(printer, ply)
+
+    cooldown = CurTime() + 2
 
 end)
