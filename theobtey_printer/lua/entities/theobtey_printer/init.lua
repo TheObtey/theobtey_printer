@@ -110,28 +110,28 @@ function ENT:Think()
 end
 
 local actions = {
-    [1] = {
+    [0] = {
         func = function(printer, ply)
 
             printer:UpgradeTier(ply)
 
         end
     },
-    [2] = {
+    [1] = {
         func = function(printer, ply)
 
             printer:RechargeBattery(ply)
 
         end
     },
-    [3] = {
+    [2] = {
         func = function(printer, ply)
 
             printer:CoolTemperature(ply)
 
         end
     },
-    [4] = {
+    [3] = {
         func = function(printer, ply)
 
             printer:RetrieveMoney(ply)
@@ -147,7 +147,9 @@ net.Receive("OBTPRINT:ActionOnPrinter", function(_, ply)
     
     if CurTime() < cooldowns[ply:SteamID64()] then return end
 
-    local num = net.ReadUInt(3)
+	cooldowns[ply:SteamID64()] = CurTime() + 1
+
+	local num = net.ReadUInt(2)
     local printer = net.ReadEntity()
 
     if not IsValid(printer) or printer:GetClass() ~= "theobtey_printer" then return end
@@ -156,7 +158,5 @@ net.Receive("OBTPRINT:ActionOnPrinter", function(_, ply)
     if printer:GetPos():DistToSqr(ply:GetPos()) > 10000*OBTPRINT.Config.MinimalDistance or not printer:IsPlayerLooking(ply) then return end
 
     actions[num].func(printer, ply)
-
-    cooldowns[ply:SteamID64()] = CurTime() + 2
 
 end)
