@@ -83,11 +83,11 @@ function ENT:Draw()
                 if CurTime() >= upgradeCooldown then 
                 
                     net.Start("OBTPRINT:ActionOnPrinter")
-                    net.WriteUInt(1, 3)
+                    net.WriteUInt(0, 2)
                     net.WriteEntity(self)
                     net.SendToServer()
     
-                    upgradeCooldown = CurTime() + 2
+                    upgradeCooldown = CurTime() + 1
                 
                 end
 
@@ -132,11 +132,11 @@ function ENT:Draw()
                 if CurTime() >= batteryCooldown then 
                 
                     net.Start("OBTPRINT:ActionOnPrinter")
-                    net.WriteUInt(2, 3)
+                    net.WriteUInt(1, 2)
                     net.WriteEntity(self)
                     net.SendToServer()
     
-                    batteryCooldown = CurTime() + 2
+                    batteryCooldown = CurTime() + 1
                 
                 end
 
@@ -181,11 +181,11 @@ function ENT:Draw()
                 if CurTime() >= temperatureCooldown then
                     
                     net.Start("OBTPRINT:ActionOnPrinter")
-                    net.WriteUInt(3, 3)
+                    net.WriteUInt(2, 2)
                     net.WriteEntity(self)
                     net.SendToServer()
     
-                    temperatureCooldown = CurTime() + 2
+                    temperatureCooldown = CurTime() + 1
                 
                 end
 
@@ -213,11 +213,11 @@ function ENT:Draw()
                 if CurTime() >= retrieveMoneyCooldown then 
                     
                     net.Start("OBTPRINT:ActionOnPrinter")
-                    net.WriteUInt(4, 3)
+                    net.WriteUInt(3, 2)
                     net.WriteEntity(self)
                     net.SendToServer()
     
-                    retrieveMoneyCooldown = CurTime() + 2
+                    retrieveMoneyCooldown = CurTime() + 1
                     
                 end
 
