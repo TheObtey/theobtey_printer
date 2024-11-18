@@ -1,7 +1,7 @@
 OBTPRINT.Config = OBTPRINT.Config or {}
 
 -- What language use (fr, en)
-OBTPRINT.Config.Language = "fr"
+OBTPRINT.Config.Language = "en"
 
 -- Leave blank to use DarkRP currency
 OBTPRINT.Config.MoneyCurrency = "$"
