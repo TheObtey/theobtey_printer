@@ -143,6 +143,8 @@ local actions = {
 local cooldowns = {}
 net.Receive("OBTPRINT:ActionOnPrinter", function(_, ply)
 
+    cooldowns[ply:SteamID64()] = cooldowns[ply:SteamID64()] or 0
+    
     if CurTime() < cooldowns[ply:SteamID64()] then return end
 
     local num = net.ReadUInt(3)
