@@ -200,7 +200,9 @@ function ENT:Draw()
         draw.RoundedBox(0, 15, 495, 570, 90, colors["border"])
         draw.RoundedBox(0, 20, 500, 560, 80, currentColors["money_btn"])
         
-        draw.SimpleText("$" .. self:GetMoneyAmount(), OBTPRINT:Font(72, "Bold"), 300, 540, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        local currency = OBTPRINT.Config.MoneyCurrency ~= "" and OBTPRINT.Config.MoneyCurrency or GAMEMODE.Config.currency 
+
+        draw.SimpleText(currency .. self:GetMoneyAmount(), OBTPRINT:Font(72, "Bold"), 300, 540, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         
         if OBTPRINT.imgui.IsHovering(15,495,570,90) then
             
