@@ -18,22 +18,19 @@ if SERVER then
 	}
 
 	-- Interval between each print
-	OBTPRINT.Config.IntervalBetweenPrint = 5
-
-	-- How much money is printed
-	OBTPRINT.Config.MoneyAmountPrinted = 1000
+	OBTPRINT.Config.IntervalBetweenPrint = 10
 
 	-- How much to decrease battery for each print 
-	OBTPRINT.Config.BatteryDecrease = 5
+	OBTPRINT.Config.BatteryDecrease = 2
 
 	-- Cost of a full battery recharge
-	OBTPRINT.Config.BatteryRechargeCost = 100
+	OBTPRINT.Config.BatteryRechargeCost = 1000
 
 	-- How much heat to increase for each print 
-	OBTPRINT.Config.TemperatureIncrease = 5
+	OBTPRINT.Config.TemperatureIncrease = 2
 
 	-- Cost of a full cooling
-	OBTPRINT.Config.TemperatureCoolCost = 100
+	OBTPRINT.Config.TemperatureCoolCost = 1000
 
 end
 
@@ -42,16 +39,16 @@ OBTPRINT.Config.Tiers = {
 	[1] = {
 		name = "BASIC",		-- Name of the tier
 		price = 0,		-- Price for the upgrade
-		printedMoney = 1000	-- Money amount to print
+		printedMoney = 500	-- Money amount to print
 	},
 	[2] = {
 		name = "INTERMEDIATE",
-		price = 500,
-		printedMoney = 5000
+		price = 1500,
+		printedMoney = 2500
 	},
 	[3] = {
 		name = "ADVANCED",
-		price = 1500,
+		price = 5000,
 		printedMoney = 10000
 	}
 }
