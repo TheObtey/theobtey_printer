@@ -1,9 +1,12 @@
 OBTPRINT.Config = OBTPRINT.Config or {}
 
 -- What language use (fr, en)
-OBTPRINT.Config.Language = "en"
+OBTPRINT.Config.Language = "fr"
 
--- Distance min to interact with printer (in meter)
+-- Leave blank to use DarkRP currency
+OBTPRINT.Config.MoneyCurrency = "$"
+
+-- Minimal distance to interact with printer (in meter)
 OBTPRINT.Config.MinimalDistance = 1
 
 if SERVER then
@@ -15,7 +18,7 @@ if SERVER then
 	}
 
 	-- Interval between each print
-	OBTPRINT.Config.IntervalBetweenPrint = 2
+	OBTPRINT.Config.IntervalBetweenPrint = 5
 
 	-- How much money is printed
 	OBTPRINT.Config.MoneyAmountPrinted = 1000
@@ -34,19 +37,20 @@ if SERVER then
 
 end
 
+-- Tiers for printers
 OBTPRINT.Config.Tiers = {
 	[1] = {
-		name = "BASIQUE",
-		price = 0,
-		printedMoney = 1000
+		name = "BASIC",		-- Name of the tier
+		price = 0,		-- Price for the upgrade
+		printedMoney = 1000	-- Money amount to print
 	},
 	[2] = {
-		name = "INTERDMÉDIAIRE",
+		name = "INTERMEDIATE",
 		price = 500,
 		printedMoney = 5000
 	},
 	[3] = {
-		name = "AVANCÉ",
+		name = "ADVANCED",
 		price = 1500,
 		printedMoney = 10000
 	}

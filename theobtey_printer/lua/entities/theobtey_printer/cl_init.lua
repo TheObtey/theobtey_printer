@@ -60,13 +60,13 @@ function ENT:Draw()
         draw.RoundedBox(0, 15, 15, 570, 60, colors["border"])
         draw.RoundedBox(0, 20, 20, 560, 50, colors["slot"])
         
-        draw.SimpleText(self:GetPrinterOwner():Nick(), OBTPRINT:Font(32), 300, 42, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText(self:GetPrinterOwner():Nick(), OBTPRINT:Font(38), 300, 45, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         
         -- Draw printer tier
         draw.RoundedBox(0, 15, 85, 570, 60, colors["border"])
         draw.RoundedBox(0, 20, 90, 560, 50, colors["slot"])
         
-        draw.SimpleText(self:GetTierName(), OBTPRINT:Font(32), 300, 114, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)    
+        draw.SimpleText(self:GetTierName(), OBTPRINT:Font(38), 300, 115, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)    
         
         -- Draw upgrade slot
         draw.RoundedBox(0, 180, 155, 240, 60, colors["border"])
@@ -101,22 +101,29 @@ function ENT:Draw()
         -- Draw battery slot
         draw.RoundedBox(0, 15, 155, 160, 330, colors["border"])
         draw.RoundedBox(0, 20, 160, 150, 320, colors["slot"])
-        draw.RoundedBox(0, 25, 434, 140, 40, colors["border"])
-        draw.RoundedBox(0, 28, 437, 134, 34, currentColors["battery_btn"])
+        draw.RoundedBox(0, 25, 435, 140, 40, colors["border"])
+        draw.RoundedBox(0, 28, 438, 134, 34, currentColors["battery_btn"])
         
-        draw.SimpleText(OBTPRINT.Constants.texts[OBTPRINT.Config.Language]["battery"], OBTPRINT:Font(32, "Bold"), 93, 185, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        draw.SimpleText(OBTPRINT.Constants.texts[OBTPRINT.Config.Language]["battery"], OBTPRINT:Font(34, "Bold"), 93, 185, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         draw.SimpleText(tostring(self:GetBatteryCharge()).. "%", OBTPRINT:Font(24, "Thin"), 95, 225, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         draw.SimpleText(OBTPRINT.Constants.texts[OBTPRINT.Config.Language]["battery_charge"], OBTPRINT:Font(24, "SemiBold"), 93, 455, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         
         local batteryCharge = self:GetBatteryCharge()
-        local chargeLevels = {[100] = true, [80] = true, [50] = true, [20] = true, [10] = true}
-        local materialKey = chargeLevels[batteryCharge] and tostring(batteryCharge) or "0"
+        local chargeLevels = {100, 80, 50, 20, 10}
+        local materialKey = "0"
+
+        for _, level in ipairs(chargeLevels) do
+            if batteryCharge >= level then
+                materialKey = tostring(level)
+                break
+            end
+        end
 
         surface.SetMaterial(OBTPRINT.Constants.materials.battery[materialKey])
         surface.SetDrawColor(color_white)
         surface.DrawTexturedRect(50, 240, 90, 180)
         
-        if OBTPRINT.imgui.IsHovering(25,434,140,40) then
+        if OBTPRINT.imgui.IsHovering(25, 435, 140, 40) then
             
             currentColors["battery_btn"] = colors["slot_hover"]
             
@@ -143,22 +150,29 @@ function ENT:Draw()
         -- Draw temperature slot
         draw.RoundedBox(0, 425, 155, 160, 330, colors["border"])
         draw.RoundedBox(0, 430, 160, 150, 320, colors["slot"])
-        draw.RoundedBox(0, 435, 434, 140, 40, colors["border"])
-        draw.RoundedBox(0, 438, 437, 134, 34, currentColors["temperature_btn"])
+        draw.RoundedBox(0, 435, 435, 140, 40, colors["border"])
+        draw.RoundedBox(0, 438, 438, 134, 34, currentColors["temperature_btn"])
         
         draw.SimpleText(OBTPRINT.Constants.texts[OBTPRINT.Config.Language]["temperature"], OBTPRINT:Font(32, "Bold"), 505, 185, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         draw.SimpleText(tostring(self:GetTemperature()) .. "°", OBTPRINT:Font(24, "Thin"), 505, 225, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         draw.SimpleText(OBTPRINT.Constants.texts[OBTPRINT.Config.Language]["temperature_cool"], OBTPRINT:Font(24), 505, 455, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         
         local temperature = self:GetTemperature()
-        local tempLevels = {[100] = true, [80] = true}
-        local materialKey = tempLevels[temperature] and tostring(temperature) or "50"
+        local tempLevels = {100, 80}
+        local materialKey = "50"
+        
+        for _, level in ipairs(tempLevels) do
+            if temperature >= level then
+                materialKey = tostring(level)
+                break
+            end
+        end
         
         surface.SetMaterial(OBTPRINT.Constants.materials.temperature[materialKey])
         surface.SetDrawColor(color_white)
         surface.DrawTexturedRect(440, 240, 130, 180)
         
-        if OBTPRINT.imgui.IsHovering(435,434,140,40) then
+        if OBTPRINT.imgui.IsHovering(435, 435, 140, 40) then
             
             currentColors["temperature_btn"] = colors["slot_hover"]
             
@@ -186,7 +200,9 @@ function ENT:Draw()
         draw.RoundedBox(0, 15, 495, 570, 90, colors["border"])
         draw.RoundedBox(0, 20, 500, 560, 80, currentColors["money_btn"])
         
-        draw.SimpleText("$" .. self:GetMoneyAmount(), OBTPRINT:Font(72, "Bold"), 300, 540, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        local currency = OBTPRINT.Config.MoneyCurrency ~= "" and OBTPRINT.Config.MoneyCurrency or GAMEMODE.Config.currency 
+
+        draw.SimpleText(currency .. self:GetMoneyAmount(), OBTPRINT:Font(72, "Bold"), 300, 540, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         
         if OBTPRINT.imgui.IsHovering(15,495,570,90) then
             
